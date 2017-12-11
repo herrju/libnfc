@@ -29,6 +29,7 @@ FOREACH(source ${EXAMPLES-SOURCES})
   ENDIF(WIN32)
 
   ADD_EXECUTABLE(${source} ${TARGETS})
+  TARGET_COMPILE_OPTIONS(${source} PRIVATE -Wall -Wextra -Wpedantic -std=c11)
   TARGET_LINK_LIBRARIES(${source} nfc)
   TARGET_LINK_LIBRARIES(${source} nfcutils)
   INSTALL(TARGETS ${source} RUNTIME DESTINATION bin COMPONENT examples)

@@ -1,5 +1,6 @@
 cmake_minimum_required (VERSION 2.6)
 
+set (CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_LIST_DIR}/cmake/modules)
 if (NOT DEFINED CMAKE_BUILD_TYPE)
   set (CMAKE_BUILD_TYPE Release CACHE STRING "Build type")
 endif ()
@@ -31,8 +32,6 @@ ADD_DEFINITIONS("-DHAVE_CONFIG_H")
 
 INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_SOURCE_DIR}/include)
 
-# make it easy to locate CMake modules for finding libraries
-SET(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/modules/")
 
 # Options
 option (LIBNFC_LOG "Enable log facility (errors, warning, info and debug messages)" ON)
@@ -69,7 +68,7 @@ option (BUILD_DEBPKG "build debian package ON/OFF" OFF)
 # Doxygen
 SET(builddir "${CMAKE_BINARY_DIR}")
 SET(top_srcdir "${CMAKE_SOURCE_DIR}")
-INCLUDE(UseDoxygen)
+INCLUDE(${CMAKE_CURRENT_LIST_DIR}/cmake/modules/UseDoxygen.cmake)
 
 IF(DEFINED CMAKE_INSTALL_LIBDIR)
   SET(libdir ${CMAKE_INSTALL_LIBDIR})
