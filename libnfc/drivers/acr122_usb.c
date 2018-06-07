@@ -571,6 +571,8 @@ acr122_usb_send(nfc_device *pnd, const uint8_t *pbtData, const size_t szData, co
   return NFC_SUCCESS;
 }
 
+bool libnfc_rdr_error = false;
+
 #define USB_TIMEOUT_PER_PASS 200
 static int
 acr122_usb_receive(nfc_device *pnd, uint8_t *pbtData, const size_t szDataLen, const int timeout)
@@ -617,6 +619,7 @@ read:
   }
   if (res < 12) {
     log_put(LOG_GROUP, LOG_CATEGORY, NFC_LOG_PRIORITY_ERROR, "%s", "Invalid RDR_to_PC_DataBlock frame");
+    libnfc_rdr_error = true;
     // try to interrupt current device state
     acr122_usb_ack(pnd);
     pnd->last_error = NFC_EIO;
